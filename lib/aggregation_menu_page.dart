@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'aggregation_boxes_page.dart';
-import 'no_aggregation_page.dart';
 
 class AggregationMenuPage extends StatelessWidget {
   const AggregationMenuPage({super.key});
@@ -72,12 +71,6 @@ class AggregationMenuPage extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NoAggregationPage(),
-                      ),
-                    );
                   },
                   icon: const Icon(Icons.remove_circle_outline),
                   label: const Text('Без агрегации'),

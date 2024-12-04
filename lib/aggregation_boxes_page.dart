@@ -98,8 +98,6 @@ class AggregationBoxesPage extends StatelessWidget {
         Icons.error,
       );
     }
-
-    // Очистить поле и вернуть фокус
     controller.clear();
     focusNode.requestFocus();
   }
@@ -126,33 +124,52 @@ class AggregationBoxesPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFDD7B35), Color(0xFFAE2E2E)],
+            colors: [Color(0xFFFAE3CB), Color(0xFFF4B39C)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 20),
-              TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                decoration: InputDecoration(
-                  hintText: 'Отсканируйте код коробки...',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
-                onSubmitted: (value) {
-                  _scanAndNavigate(context, value, _controller, _focusNode);
-                },
+          child: Center(
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
               ),
-            ],
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Отсканируйте код коробки',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextField(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.qr_code_scanner),
+                        hintText: 'Код коробки...',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onSubmitted: (value) {
+                        _scanAndNavigate(context, value, _controller, _focusNode);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

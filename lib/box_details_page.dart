@@ -25,6 +25,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
   List<Map<String, dynamic>> _scannedProducts = [];
   double _progress = 0.0;
   bool _isBoxClosed = false;
+  bool _isBoxUsed = false;
 
   @override
   void initState() {
@@ -102,6 +103,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
           _limit = data['limit'] ?? 0;
           _scannedProducts = List<Map<String, dynamic>>.from(data['scanned_products']);
           _progress = (_scannedCount / _limit).clamp(0.0, 1.0);
+          _isBoxUsed = data['is_used'] ?? false; // Обновляем статус is_used
         });
       } else {
         _showSnackbar('Ошибка загрузки данных коробки. Код: ${response.statusCode}', Colors.red, Icons.error);
@@ -199,7 +201,6 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,6 +215,9 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
           ],
         ),
         backgroundColor: const Color(0xFFDD7B35),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: _fetchBoxDetails,
@@ -226,7 +230,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
                 TextField(
                   controller: _scanController,
                   focusNode: _scanFocusNode,
-                  enabled: !_isBoxClosed,
+                  enabled: !_isBoxClosed && !_isBoxUsed, // Поле недоступно, если коробка закрыта или использована
                   decoration: InputDecoration(
                     hintText: 'Отсканируйте КМ код',
                     filled: true,
@@ -303,15 +307,18 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: _isBoxClosed ? null : _closeBox,
+                onPressed: (_isBoxClosed || _isBoxUsed) ? null : _closeBox, // Кнопка недоступна, если коробка закрыта или использована
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
-                icon: const Icon(Icons.lock),
-                label: const Text('Закрыть коробку'),
+                icon: const Icon(Icons.lock, color: Colors.white),
+                label: const Text(
+                  'Закрыть коробку',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),

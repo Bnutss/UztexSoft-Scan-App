@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'aggregation_menu_page.dart';
+import 'login_page.dart';
 
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
@@ -21,7 +22,10 @@ class MenuPage extends StatelessWidget {
             icon: const Icon(Icons.logout, color: Colors.white),
             tooltip: 'Выйти',
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+              );
             },
           ),
         ],
