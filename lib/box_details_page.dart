@@ -47,7 +47,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/close-box/${widget.boxId}/');
+    final url = Uri.parse('https://uztexsoft.uz/api/close-box/${widget.boxId}/');
     try {
       final response = await http.post(
         url,
@@ -87,7 +87,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/box-details/${widget.boxId}/');
+    final url = Uri.parse('https://uztexsoft.uz/api/box-details/${widget.boxId}/');
     try {
       final response = await http.get(
         url,
@@ -103,7 +103,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
           _limit = data['limit'] ?? 0;
           _scannedProducts = List<Map<String, dynamic>>.from(data['scanned_products']);
           _progress = (_scannedCount / _limit).clamp(0.0, 1.0);
-          _isBoxUsed = data['is_used'] ?? false; // Обновляем статус is_used
+          _isBoxUsed = data['is_used'] ?? false;
         });
       } else {
         _showSnackbar('Ошибка загрузки данных коробки. Код: ${response.statusCode}', Colors.red, Icons.error);
@@ -120,7 +120,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/box-details/${widget.boxId}/$productId/');
+    final url = Uri.parse('https://uztexsoft.uz/api/box-details/${widget.boxId}/$productId/');
     try {
       final response = await http.delete(
         url,
@@ -153,7 +153,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/scan-product-to-box/');
+    final url = Uri.parse('https://uztexsoft.uz/api/scan-product-to-box/');
     try {
       final response = await http.post(
         url,
@@ -230,7 +230,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
                 TextField(
                   controller: _scanController,
                   focusNode: _scanFocusNode,
-                  enabled: !_isBoxClosed && !_isBoxUsed, // Поле недоступно, если коробка закрыта или использована
+                  enabled: !_isBoxClosed && !_isBoxUsed,
                   decoration: InputDecoration(
                     hintText: 'Отсканируйте КМ код',
                     filled: true,
@@ -307,7 +307,7 @@ class _BoxDetailsPageState extends State<BoxDetailsPage> {
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: (_isBoxClosed || _isBoxUsed) ? null : _closeBox, // Кнопка недоступна, если коробка закрыта или использована
+                onPressed: (_isBoxClosed || _isBoxUsed) ? null : _closeBox,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orange,
                   shape: RoundedRectangleBorder(

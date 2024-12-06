@@ -52,7 +52,7 @@ class AggregationBoxesPage extends StatelessWidget {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/box-scan/');
+    final url = Uri.parse('https://uztexsoft.uz/api/box-scan/');
     try {
       final response = await http.post(
         url,
